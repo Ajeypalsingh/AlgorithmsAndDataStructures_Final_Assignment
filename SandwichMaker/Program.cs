@@ -81,11 +81,16 @@ Console.WriteLine("\nMaking your sandwich\n");
 int sandwichCalories = 0;
 List<string> sandwich = new List<string> { "bread" };
 
+
+
+// I have taken reference from chatgpt for below functionality
 while (sandwichCalories < minCalories || sandwichCalories > maxCalories)
 {
     sandwich.Clear();
     sandwichCalories = 0;
 
+
+    // Iterating over ingridients to skip excluded ingrideients
     foreach (KeyValuePair<string, int> ingredient in ingredients)
     {
         if (!excludedIngredients.Contains(ingredient.Key))
