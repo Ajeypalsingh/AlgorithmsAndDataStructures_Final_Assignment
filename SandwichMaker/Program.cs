@@ -60,6 +60,8 @@ do
     }
 } while (excludedIngredientsArray.Contains("bread"));
 
+
+// List to store ingrients to skip in sandwich
 List<string> excludedIngredients = new List<string>();
 foreach (string ingredient in excludedIngredientsArray)
 {
@@ -71,6 +73,9 @@ foreach (string ingridient in excludedIngredientsArray)
     Console.WriteLine($"You have excluded {ingridient}");
 }
 
+
+
+// Making sandwich
 Console.WriteLine("\nMaking your sandwich\n");
 
 int sandwichCalories = 0;
@@ -100,10 +105,14 @@ while (sandwichCalories < minCalories || sandwichCalories > maxCalories)
     }
 
 }
+
+// Displaying ingridients that are added
 foreach (string ingredient in sandwich)
 {
     Console.WriteLine($"Adding {ingredient} ({ingredients[ingredient]} calories)");
 }
 
+
+// Sandwich calories
 Console.WriteLine($"\nYour sandwich, with {sandwichCalories} calories, is ready. Enjoy!");
 
