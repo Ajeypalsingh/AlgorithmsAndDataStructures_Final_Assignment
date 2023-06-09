@@ -41,3 +41,16 @@ while (!int.TryParse(Console.ReadLine(), out maxCalories) || maxCalories <= minC
 {
     Console.WriteLine("Invalid input. Please enter a valid number:");
 }
+
+Console.WriteLine("\nDo you want to exclude any ingredients? (separated by commas)");
+string excludedIngredientsInput = Console.ReadLine();
+string[] excludedIngredientsArray = excludedIngredientsInput.Split(',');
+
+while (excludedIngredientsArray.Contains("bread"))
+{
+    Console.WriteLine("Note: The 'bread' ingredient cannot be excluded from the sandwich.");
+    Console.WriteLine("\nDo you want to exclude any ingredients? (separated by commas)");
+    excludedIngredientsInput = Console.ReadLine();
+    excludedIngredientsArray = excludedIngredientsInput.Split(',');
+}
+
