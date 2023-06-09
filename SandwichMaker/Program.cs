@@ -4,30 +4,32 @@ Dictionary<string, int> ingredients = new Dictionary<string, int>
 
             { "bread", 66 },
             { "ham", 72 },
+            { "banana pepper", 10 },
             { "bologna", 57 },
+            { "tomato", 4 },
+            { "spinach", 7 },
+            { "garlic aioli", 100 },
             { "chicken", 17 },
             { "corned beef", 53 },
             { "salami", 40 },
+            { "butter", 102 },
             { "cheese, american", 104 },
             { "cheese, cheddar", 113 },
+            { "avocado", 64 },
             { "cheese, havarti", 105 },
             { "mayonnaise", 94 },
             { "mustard", 10 },
-            { "butter", 102 },
-            { "garlic aioli", 100 },
+            { "cucumber", 4 },
             { "sriracha", 15 },
             { "dressing, ranch", 73 },
             { "dressing, 1000 island", 59 },
             { "lettuce", 5 },
-            { "tomato", 4 },
-            { "cucumber", 4 },
-            { "banana pepper", 10 },
             { "green pepper", 3 },
             { "red onion", 6 },
-            { "spinach", 7 },
-            { "avocado", 64 }
         };
 
+
+// User Input for Max and Min calories
 Console.WriteLine("Enter the minimum number of calories you would like in your sandwich:");
 int minCalories;
 while (!int.TryParse(Console.ReadLine(), out minCalories))
@@ -42,15 +44,66 @@ while (!int.TryParse(Console.ReadLine(), out maxCalories) || maxCalories <= minC
     Console.WriteLine("Invalid input. Please enter a valid number:");
 }
 
-Console.WriteLine("\nDo you want to exclude any ingredients? (separated by commas)");
-string excludedIngredientsInput = Console.ReadLine();
-string[] excludedIngredientsArray = excludedIngredientsInput.Split(',');
 
-while (excludedIngredientsArray.Contains("bread"))
+// Storing Ingredients to exclude in sandwich
+string excludedIngredientsInput;
+string[] excludedIngredientsArray;
+do
 {
-    Console.WriteLine("Note: The 'bread' ingredient cannot be excluded from the sandwich.");
-    Console.WriteLine("\nDo you want to exclude any ingredients? (separated by commas)");
+    Console.WriteLine("\nDo you want to exclude any ingredients? (separated by / )");
     excludedIngredientsInput = Console.ReadLine();
-    excludedIngredientsArray = excludedIngredientsInput.Split(',');
+    excludedIngredientsArray = excludedIngredientsInput.Split('/');
+
+    if (excludedIngredientsArray.Contains("bread"))
+    {
+        Console.WriteLine("Note: The 'bread' ingredient cannot be excluded from the sandwich.");
+    }
+} while (excludedIngredientsArray.Contains("bread"));
+
+List<string> excludedIngredients = new List<string>();
+foreach (string ingredient in excludedIngredientsArray)
+{
+    excludedIngredients.Add(ingredient.Trim().ToLower());
 }
+
+foreach (string ingridient in excludedIngredientsArray)
+{
+    Console.WriteLine($"You have excluded {ingridient}");
+}
+
+Console.WriteLine("\nMaking your sandwich\n");
+
+int sandwichCalories = 0;
+List<string> sandwich = new List<string> { "bread" };
+
+while (sandwichCalories < minCalories || sandwichCalories > maxCalories)
+{
+    sandwich.Clear();
+    sandwichCalories = 0;
+
+    foreach (KeyValuePair<string, int> ingredient in ingredients)
+    {
+        if (!excludedIngredients.Contains(ingredient.Key))
+        {
+            if (sandwichCalories + ingredient.Value <= maxCalories)
+            {
+                sandwich.Add(ingredient.Key);
+                sandwichCalories += ingredient.Value;
+
+                if (sandwichCalories >= minCalories && sandwichCalories <= maxCalories)
+                {
+                    sandwich.Add("bread");
+                    break;
+                }
+            }
+        }
+    }
+
+}
+foreach (string ingredient in sandwich)
+{
+    Console.WriteLine($"Adding {ingredient} ({ingredients[ingredient]} calories)");
+}
+
+Console.WriteLine($"\nYour sandwich, with {sandwichCalories} calories, is ready. Enjoy!");
 
